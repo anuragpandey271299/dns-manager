@@ -1,0 +1,47 @@
+.addContainer{
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    font-size: 25px;
+}
+.addContainer .addinputs{
+    display: flex;
+    justify-content: space-between;
+    margin: 10px;
+}
+.addContainer .addinputs input{
+    border: none;
+    border-radius: 10px;
+    width: 300px;
+    padding: 0;
+}
+.addContainer .addinputs select{
+    border-radius: 5px;
+    border: none;
+    width: 300px;
+}
+.addContainer form{
+    width: 50%;
+    margin-top: 50px;
+    text-align: center;
+    color: white;
+}
+@media screen and (max-width: 600px) {
+    .addContainer {
+        font-size: 20px;
+    }
+
+    
+    .addContainer .addinputs input{
+        width: 150px;
+    }
+    .addContainer .addinputs select{
+        width: 100px;
+    }
+
+    .addContainer form {
+        display: flex;
+        flex-direction: column;
+        width: 50vw;
+    }
+}

@@ -1,0 +1,31 @@
+.dashboardpage{
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(135deg, skyblue, black);
+}
+.dashboardpage #welcome{
+    text-align: center;
+    font-size: 30px;
+    font-weight: bolder;
+    color: white;
+}
+.dashboardpage #welcome span{
+    color: pink;
+}
+.dashboardpage button{
+    background: none;
+    color: white;
+    font-size: 25px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 3px solid white;
+}
+.dashboardpage .buttons{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+.dashboardpage .buttons button:last-child{
+    background-color:bisque;
+    color:crimson;
+}
