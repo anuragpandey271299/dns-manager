@@ -1,8 +1,11 @@
 const express = require('express');
 const dnsRecord = require('../Models/dnsRecord');
 const isLoggedIn = require('../Middleware/authentication');
+const AWS = require('aws-sdk');
 
 const router = express.Router();
+
+const route53 = new AWS.Route53();
 
 router.post('/', isLoggedIn, async (req, res) => {
   try {
@@ -13,8 +16,33 @@ router.post('/', isLoggedIn, async (req, res) => {
       return res.status(400).json({ error: 'All fields are required.' });
     }
 
+    const changeParams = {
+      ChangeBatch: {
+        Changes: [
+          {
+            Action: 'CREATE',
+            ResourceRecordSet: {
+              Name: `${serverName}.${domain}`,
+              Type: recordType,
+              TTL: ttl,
+              ResourceRecords: [
+                {
+                  Value: ipAddress,
+                },
+              ],
+            },
+          },
+        ],
+      },
+      HostedZoneId: 'Z0705757ZCZK4PKSGF38',
+    };
+
+
+    const route53Response = await route53.changeResourceRecordSets(changeParams).promise();
+
     const newRecord = await dnsRecord.create({ USERID, sourceIP, serverName, recordType, domain, ttl, ipAddress });
-    res.status(201).json(newRecord);
+
+    res.status(201).json({ newRecord, route53Response });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });
