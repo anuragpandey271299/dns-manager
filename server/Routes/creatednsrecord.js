@@ -1,11 +1,14 @@
 const express = require('express');
 const dnsRecord = require('../Models/dnsRecord');
 const isLoggedIn = require('../Middleware/authentication');
-const AWS = require('aws-sdk');
+const { Route53Client, ChangeResourceRecordSetsCommand } = require("@aws-sdk/client-route-53");
+const { fromIni } = require("@aws-sdk/credential-provider-node");
 
 const router = express.Router();
 
-const route53 = new AWS.Route53();
+const route53Client = new Route53Client({
+  credentials: fromIni({}),
+});
 
 router.post('/', isLoggedIn, async (req, res) => {
   try {
@@ -17,12 +20,13 @@ router.post('/', isLoggedIn, async (req, res) => {
     }
 
     const changeParams = {
+      HostedZoneId: 'Z0705757ZCZK4PKSGF38',
       ChangeBatch: {
         Changes: [
           {
             Action: 'CREATE',
             ResourceRecordSet: {
-              Name: `${serverName}.${domain}`,
+              Name: `${serverName}.${domain}`, 
               Type: recordType,
               TTL: ttl,
               ResourceRecords: [
@@ -34,11 +38,10 @@ router.post('/', isLoggedIn, async (req, res) => {
           },
         ],
       },
-      HostedZoneId: 'Z0705757ZCZK4PKSGF38',
     };
 
 
-    const route53Response = await route53.changeResourceRecordSets(changeParams).promise();
+    const route53Response = await route53Client.send(new ChangeResourceRecordSetsCommand(changeParams));
 
     const newRecord = await dnsRecord.create({ USERID, sourceIP, serverName, recordType, domain, ttl, ipAddress });
 
