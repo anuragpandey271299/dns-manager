@@ -1,6 +1,6 @@
 const express = require('express');
 const { Route53Client, CreateHostedZoneCommand } = require("@aws-sdk/client-route-53");
-const { fromIni } = require("@aws-sdk/credential-provider-node");
+const { fromIni } = require("@aws-sdk/credential-providers");
 
 const router = express.Router();
 

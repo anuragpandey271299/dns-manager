@@ -14,7 +14,7 @@ const createDNSRecord=require('./Routes/creatednsrecord')
 const getDnsRecord=require('./Routes/getDnsRecord')
 const updateDNSrecord=require('./Routes/editdnsrecord')
 const deletednsrecord=require('./Routes/deleteDnsRecord')
-const hostedzone=require('./Routes/hostedzone')
+const hostedZone=require('./Routes/hostedzone')
 
 const app=express()
 
@@ -29,7 +29,7 @@ app.use('/creatednsrecord',createDNSRecord)
 app.use('/getdnsrecord',getDnsRecord)
 app.use('/editdnsrecord',updateDNSrecord)
 app.use('/deletednsrecord',deletednsrecord)
-app.use('/hostedzone',hostedzone)
+app.use('/hostedzone',hostedZone)
 
 app.listen(process.env.PORT,()=>{
     mongoose.connect(process.env.MONGODB_URL)

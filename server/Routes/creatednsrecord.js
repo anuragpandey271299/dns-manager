@@ -2,7 +2,7 @@ const express = require('express');
 const dnsRecord = require('../Models/dnsRecord');
 const isLoggedIn = require('../Middleware/authentication');
 const { Route53Client, ChangeResourceRecordSetsCommand } = require("@aws-sdk/client-route-53");
-const { fromIni } = require("@aws-sdk/credential-provider-node");
+const { fromIni } = require("@aws-sdk/credential-providers");
 
 const router = express.Router();
 
