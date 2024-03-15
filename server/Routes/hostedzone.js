@@ -8,7 +8,7 @@ const route53Client = new Route53Client({
   credentials: fromIni({}),
 });
 
-router.post('/hostedzone', async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const { domainName } = req.body;
 
