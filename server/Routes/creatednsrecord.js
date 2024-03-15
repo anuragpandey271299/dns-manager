@@ -8,6 +8,7 @@ const router = express.Router();
 
 const route53Client = new Route53Client({
   credentials: fromIni({}),
+  region: "ap-south-1",
 });
 
 router.post('/', isLoggedIn, async (req, res) => {
